@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="/build/pdf.worker.js"></script>
+    <script>
+    PDFJS.workerSrc = 'build/pdf.worker.js'
+    </script>
+</head>
+<body>
+    
+<canvas id="canvasPDF" style="border:1px solid black;"></canvas>
+
+<script type="text/javascript">
+
+var numPage = 1; // Numéro de page courante
+var totalPage = null; // nombre de pages
+
+// Etape #1 : il faut créer un objet PDFJS et définir un document.
+var oPdf = PDFJS.getDocument('pdf.pdf');
+// Etape #2 : il faut le déclarer via un promise la fonction de rendu.
+oPdf.then(renderPDF);
+
+//Etape #3 : la fonction de rendu du fichier PDF
+function renderPDF(pdf){
+    // au premier appel de la fonction, on récupère le nombre de pages
+    if(totalPage == null){
+        pdf.getPage(numPage).then(renderPage);
+        numPage++;
+        // Puis 1 seconde plus tard on affiche la page suivante
+        setTimeout(function(){
+            renderPDF(pdf);
+        }, 1000);
+    }
+}
+// Etape #4 : la fonction de rendu d’une page PDF
+function renderPage(page){
+    // L'échelle de l'image
+    var scale = 1;
+    var viewport = page.getElementById('canvasPDF');
+    var context = canvas.getContext('2d');
+    // On définit la taille du canvas pour lui appliquer la taille du PDF
+    canvas.height = viewport.height;
+    canvas.width = viewport.width;
+    // Contexte de rendu avec le contexte 2D du canvas et le viewport pour la page PDF à afficher
+    var renderContext = {
+        canvasContext: context, 
+        viewport: viewport
+    };
+    // On lance le rendu de la page
+    page.render(renderContext);
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+<!-- jQuery-->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E=" crossorigin="anonymous"></script>
+<!-- Turn.js-->
+<script type="text/javascript" src="./turnjs/turnjs4/lib/turn.min.js"></script>
+</head>
+<body>
+    
+<style>
+  #magazine{
+      margin-top:30px;
+	width:1152px;
+	height:752px;
+}
+#magazine .turn-page{
+	background-color:#ccc;
+    background-size:100% 100%;
+} 
+
+</style>
+
+<div id="magazine">
+        <div style="background-image:url(images/01.jpg);"></div>
+        <div style="background-image:url(images/02.jpg);"></div>
+        <div style="background-image:url(images/03.jpg);"></div>
+        <div style="background-image:url(images/04.jpg);"></div>
+        <div style="background-image:url(images/05.jpg);"></div>
+        <div style="background-image:url(images/06.jpg);"></div>
+</div>
+
+
+<script type="text/javascript">
+	$(window).ready(function() {
+        //$('#magazine').children().length;
+		$('#magazine').turn({
+							display: 'double', // Une ou 2 pages
+							acceleration: true, // Définit le mode d'accélération matérielle, cette valeur doit être vraie pour les périphériques tactiles.
+                            //gradients: !$.isTouch,
+                            gradients: true, // affiche les dégradés et les ombres pendant la transition (par défaut)
+                            elevation:50,
+                            autoCenter: true, // Centre le magasine
+							when: { // Quand on tourne les page
+								turned: function(e, page, view) {
+                                    console.log('Page: ', $(this).turn('view')); // Dis sur quelles nums pages on est (les deux)
+                                    console.log("Page: "+page); // dis la page (celle de gauche)
+								}
+                            }
+						});
+	});
+	
+	// Tourner les pages avec les touches du clavier
+	$(window).bind('keydown', function(e){
+		
+		if (e.keyCode==37)
+			$('#magazine').turn('previous');
+		else if (e.keyCode==39)
+			$('#magazine').turn('next');
+			
+	});
+</script>
+
+
+
+</body>
+</html>

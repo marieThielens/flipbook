@@ -1,102 +1,38 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale = 1.0, user-scalable=no">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-<script src="pdf.js"></script>
-<script src="pdf.worker.js"></script>
-<style type="text/css">
+/* 	$(window).ready(function() {
+        //$('#magazine').children().length;
+		$('#pdf-canvas').turn({
+							display: 'double', // Une ou 2 pages
+							acceleration: true, // Définit le mode d'accélération matérielle, cette valeur doit être vraie pour les périphériques tactiles.
+                            //gradients: !$.isTouch,
+                            gradients: true, // affiche les dégradés et les ombres pendant la transition (par défaut)
+                            elevation:50,
+                            autoCenter: true, // Centre le magasine
+							when: { // Quand on tourne les page
+								turned: function(e, page, view) {
+                                    console.log('Page: ', $(this).turn('view')); // Dis sur quelles nums pages on est (les deux)
+                                    console.log("Page: "+page); // dis la page (celle de gauche)
+								}
+                            }
+						});
+	});
+	
+	// Tourner les pages avec les touches du clavier
+	$(window).bind('keydown', function(e){
+		
+		if (e.keyCode==37)
+			$('#pdf-canvas').turn('previous');
+		else if (e.keyCode==39)
+			$('#pdf-canvas').turn('next');
+			
+    });
+     */
 
-#upload-button {
-	width: 150px;
-	display: block;
-	margin: 20px auto;
-}
 
-#file-to-upload {
-	display: none;
-}
 
-#pdf-main-container {
-	width: 400px;
-	margin: 20px auto;
-}
 
-#pdf-loader {
-	display: none;
-	text-align: center;
-	color: #999999;
-	font-size: 13px;
-	line-height: 100px;
-	height: 100px;
-}
+    //pdfJs.................
 
-#pdf-contents {
-	display: none;
-}
-
-#pdf-meta {
-	overflow: hidden;
-	margin: 0 0 20px 0;
-}
-
-#pdf-buttons {
-	float: left;
-}
-
-#page-count-container {
-	float: right;
-}
-
-#pdf-current-page {
-	display: inline;
-}
-
-#pdf-total-pages {
-	display: inline;
-}
-
-#pdf-canvas {
-	border: 1px solid rgba(0,0,0,0.2);
-	box-sizing: border-box;
-}
-
-#page-loader {
-	height: 100px;
-	line-height: 100px;
-	text-align: center;
-	display: none;
-	color: #999999;
-	font-size: 13px;
-}
-
-</style>
-</head>
-
-<body>
-
-<button id="upload-button">Select PDF</button> 
-<input type="file" id="file-to-upload" accept="application/pdf" />
-
-<div id="pdf-main-container">
-	<div id="pdf-loader">Loading document ...</div>
-	<div id="pdf-contents">
-		<div id="pdf-meta">
-			<div id="pdf-buttons">
-				<button id="pdf-prev">Previous</button>
-				<button id="pdf-next">Next</button>
-			</div>
-			<div id="page-count-container">Page <div id="pdf-current-page"></div> of <div id="pdf-total-pages"></div></div>
-		</div>
-		<canvas id="pdf-canvas" width="400"></canvas>
-		<div id="page-loader">Loading page ...</div>
-	</div>
-</div>
-
-<script>
-
-var __PDF_DOC,
+    var __PDF_DOC,
 	__CURRENT_PAGE,
 	__TOTAL_PAGES,
 	__PAGE_RENDERING_IN_PROGRESS = 0,
@@ -202,7 +138,3 @@ $("#pdf-next").on('click', function() {
 		showPage(++__CURRENT_PAGE);
 });
 
-</script>
-
-</body>
-</html>
